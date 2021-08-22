@@ -1,6 +1,7 @@
 # liberfix
 
 install libermod
+
 wget -O mod.sh https://raw.githubusercontent.com/zzzt27/liberfix/main/mod.sh -q && bash mod.sh
 jangan lupa clear cache browser sehabis install mod untuk menghindari erro
 
