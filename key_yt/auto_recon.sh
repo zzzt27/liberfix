@@ -54,7 +54,7 @@ function run() {
   # write to service log
   "${LIBERNET_DIR}/bin/log.sh" -w "Starting ${SERVICE_NAME} service"
   echo -e "Starting ${SERVICE_NAME} service ..."
-  screen -AmdS ping-loop "${LIBERNET_DIR}/bin/ping-loop.sh" -l \
+  screen -AmdS auto-recon "${LIBERNET_DIR}/bin/auto_recon.sh" -l \
     && echo -e "${SERVICE_NAME} service started!"
 }
 
@@ -62,7 +62,7 @@ function stop() {
   # write to service log
   "${LIBERNET_DIR}/bin/log.sh" -w "Stopping ${SERVICE_NAME} service"
   echo -e "Stopping ${SERVICE_NAME} service ..."
-  kill $(screen -list | grep ping-loop | awk -F '[.]' {'print $1'}) > /dev/null 2>&1
+  kill $(screen -list | grep auto-recon | awk -F '[.]' {'print $1'}) > /dev/null 2>&1
   echo -e "${SERVICE_NAME} service stopped!"
 }
 
