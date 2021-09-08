@@ -21,8 +21,9 @@ void="/usr/bin/void.sh"
 
 function check_connection() {
   counter=0
-  max_retries=3
-  while [[ "${counter}" -lt "${max_retries}" ]]; do
+  #max_retries=5
+  #while [[ "${counter}" -lt "${max_retries}" ]]; do
+  while true; do
     sleep 5
     # write connection checking to service log
     "${LIBERNET_DIR}/bin/log.sh" -w "Checking connection, attempt: $[${counter} + 1]"
@@ -36,14 +37,15 @@ function check_connection() {
     fi
     counter=$[${counter} + 1]
     # max retries reach
-    if [[ "${counter}" -eq "${max_retries}" ]]; then
+    #if [[ "${counter}" -eq "${max_retries}" ]]; then
       # write not connectivity to service log
-      "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: red\">Socks connection unavailable</span>"
-      echo -e "Socks connection unavailable!"
+      #"${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: red\">Socks connection unavailable</span>"
+      #echo -e "Socks connection unavailable!"
       # cancel Libernet service
-      cancel_services
-      exit 1
-    fi
+      #cancel_services
+	  #re_services
+      #exit 1
+    #fi
   done
 }
 
