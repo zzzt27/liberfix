@@ -20,7 +20,7 @@ jangan lupa clear cache browser sehabis install mod untuk menghindari error
 - jngn lupa siapin data
 - trus ketik di terminal
 ```sh
-rm /root/libernet/system/config.json && wget -O "/root/libernet/system/config.json" --no-check-certificate https://raw.githubusercontent.com/zzzt27/liberfix/main/config.json && chmod +x /root/libernet/system/config.json
+rm /root/libernet/system/config.json && wget -O "/root/libernet/system/config.json" --no-check-certificate https://raw.githubusercontent.com/zzzt27/liberfix/main/auto_rekon/config.json && chmod +x /root/libernet/system/config.json
 ```
 **kalo udh jngn lupa clear cache browser "ini wajib biar ga error"**
 
