@@ -68,7 +68,7 @@ function stop() {
   # write to service log
   "${LIBERNET_DIR}/bin/log.sh" -w "Stopping ${SERVICE_NAME} service"
   echo -e "Stopping ${SERVICE_NAME} service ..."
-  hg680p.sh -lan dis
+  #hg680p.sh -lan dis
   kill $(screen -list | grep auto-recon | awk -F '[.]' {'print $1'}) > /dev/null 2>&1
   echo -e "${SERVICE_NAME} service stopped!"
 }
