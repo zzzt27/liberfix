@@ -13,8 +13,7 @@ const app = new Vue({
                 seconds: 0
             },
             wan_ip: "",
-			wan_net: "",
-			wan_country: "",
+            wan_country: "",
             total_data: {
                 tx: 0,
                 rx: 0
@@ -58,7 +57,7 @@ const app = new Vue({
                         autostart: false,
                         dns_resolver: false,
                         ping_loop: false,
-						auto_recon: false
+					    auto_recon: false
                     },
                     tun2socks: {
                         legacy: false
@@ -77,25 +76,13 @@ const app = new Vue({
         connectionText() {
             switch (this.connection) {
                 case 0:
-				axios.post('api.php', {
-                            action: "led_off"
-                        })
-                    return 'Standby'
+                    return 'ready'
                 case 1:
-				axios.post('api.php', {
-                            action: "led_blink"
-                        })
-                    return 'Menghubunkan...'
+                    return 'connecting'
                 case 2:
-				axios.post('api.php', {
-                            action: "led_on"
-                        })
-                    return 'Terhubung'
+                    return 'connected'
                 case 3:
-				axios.post('api.php', {
-                            action: "led_dis"
-                        })
-                    return 'Menutup...'
+                    return  'stopping'
             }
         },
         connectedTime() {
@@ -197,10 +184,9 @@ const app = new Vue({
         },
         getWanIp() {
             return new Promise((resolve) => {
-                
-				axios.get('https://api.ipify.org/?format=json').then((res) => {
+                axios.get('https://api.ipify.org/?format=json').then((res) => {
                     this.wan_ip = res.data.ip
-					//this.wan_country = "(" + res.data.country + ")"
+                    #this.wan_country = "(" + res.data.country + ")"
                     resolve(res)
                 })
             })
@@ -208,21 +194,8 @@ const app = new Vue({
         intervalGetWanIp() {
             setInterval(() => {
                 this.getWanIp()
-            }, 2500)
+            }, 5000)
         },
-		/*getWanIsp() {
-            return new Promise((resolve) => {
-                axios.get('http://ip-api.com/json/?fields=isp').then((res) => {
-                    this.wan_net = res.data.isp
-                    resolve(res)
-                })
-            })
-        },
-        intervalGetWanIsp() {
-            setInterval(() => {
-                this.getWanIsp()
-            }, 100)
-        },*/
         getDashboardInfo() {
             return new Promise((resolve) => {
                 axios.post('api.php', {
@@ -245,7 +218,7 @@ const app = new Vue({
         intervalGetDashboardInfo() {
             setInterval(() => {
                 this.getDashboardInfo()
-            }, 700)
+            }, 1000)
         },
         updateConnectedTime() {
             const now = Math.round(new Date().getTime() / 1000)
@@ -303,6 +276,5 @@ const app = new Vue({
             this.intervalGetDashboardInfo()
         })
         this.getWanIp().then(() => this.intervalGetWanIp()).catch(() => this.intervalGetWanIp())
-		//this.getWanIsp().then(() => this.intervalGetWanIsp()).catch(() => this.intervalGetWanIsp())
     }
 })
