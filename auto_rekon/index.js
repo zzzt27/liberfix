@@ -166,7 +166,7 @@ const app = new Vue({
                         dns_resolver: this.config.system.tunnel.dns_resolver,
                         memory_cleaner: this.config.system.system.memory_cleaner,
                         ping_loop: this.config.system.tunnel.ping_loop,
-						auto_recon: this.config.system.tunnel.auto_recon
+						auto_recon: this.config.system.tunnel.auto_recon							  
                     }
                 }).then((res) => {
                     resolve(res)
@@ -186,7 +186,7 @@ const app = new Vue({
             return new Promise((resolve) => {
                 axios.get('https://api.ipify.org/?format=json').then((res) => {
                     this.wan_ip = res.data.ip
-                    #this.wan_country = "(" + res.data.country + ")"
+                    //this.wan_country = "(" + res.data.country + ")"
                     resolve(res)
                 })
             })
