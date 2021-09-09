@@ -32,7 +32,7 @@ echo $wan $ip
 	n=0
 	#ipCheck
   else 
-  hg680p.sh -lan off
+  #hg680p.sh -lan off
     echo ping fail
     n=$((n+1))
     # when wan-dhcp fail, 
