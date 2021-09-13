@@ -19,14 +19,17 @@ while [ 1 ]; do
   #ping with timeout 10 seconds
   ping -c 1 -W 10 -w 10 bing.com
   ret=$?
-echo ping result $ret
+  "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: Green\">[AUTO-RC]ping result $ret</span>"
+#echo ping result $ret
   if [ $ret -eq 0 ]; then
-    echo ping ok
+  "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: Green\">[AUTO-RC]ping ok</span>"
+    #echo ping ok
     sleep 30
 	n=0
 	#ipCheck
   else 
     echo ping fail
+    "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: red\">[AUTO-RC]fail ${n}</span>"
     n=$((n+1))
     # when wan-dhcp fail, 
     # net is unreachable and ping return without any delay
@@ -38,8 +41,9 @@ echo ping result $ret
   if [ $n -gt 5 ]; then
     # in case of wan-dhcp fail total time to reboot is 1 min (60 seconds)
     # in case of ping-timeout total time to reboot is 11 min (660 seconds)
+    "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: green\">[AUTO-RC]re-connecting</span>"
     n=0
-        recon
+    recon
   fi
 done
 }
