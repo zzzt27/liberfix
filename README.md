@@ -1,7 +1,8 @@
 # liberfix
 
-## install libermod
-- wajib install libernet ori dulu bisa tengok di [sini!](https://github.com/lutfailham96/libernet)
+## install libermod (WAJIB INSTALL LIBERNET ORI/FRESH INSTALL)
+- buat yg blm install libernet bisa klik [di sini!](https://github.com/lutfailham96/libernet)
+- Buat yg udh pernah install bisa fresh install untuk menghindari error bisa [klik sini!](https://github.com/lutfailham96/libernet#fresh-install--fresh-update)
 
 ```sh
 rm /root/libernet/bin/auto_recon.sh && wget -O "/root/libernet/bin/auto_recon.sh" --no-check-certificate https://raw.githubusercontent.com/zzzt27/liberfix/main/auto_rekon/auto_recon.sh && chmod +x /root/libernet/bin/auto_recon.sh
