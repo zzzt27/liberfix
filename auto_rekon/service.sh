@@ -19,11 +19,40 @@ PING_LOOP="$(grep 'ping_loop":' ${SYSTEM_CONFIG} | awk '{print $2}' | sed 's/,//
 AUTO_RECON="$(grep 'auto_recon":' ${SYSTEM_CONFIG} | awk '{print $2}' | sed 's/,//g; s/"//g')"
 void="/usr/bin/void.sh"
 
+# function check_connection() {
+  # counter=0
+  # #max_retries=5
+  # #while [[ "${counter}" -lt "${max_retries}" ]]; do
+  # while true; do
+    # sleep 5
+    # # write connection checking to service log
+    # "${LIBERNET_DIR}/bin/log.sh" -w "Checking connection, attempt: $[${counter} + 1]"
+    # echo -e "Checking connection, attempt: $[${counter} + 1]"
+    # if curl -so /dev/null -x "socks5://127.0.0.1:${DYNAMIC_PORT}" "http://bing.com"; then
+      # # write connection success to service log
+      # "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: green\">Socks connection available</span>"
+      # echo -e "Socks connection available!"
+      # CONNECTED=true
+      # break
+    # fi
+    # counter=$[${counter} + 1]
+    # # max retries reach
+    # #if [[ "${counter}" -eq "${max_retries}" ]]; then
+      # # write not connectivity to service log
+      # #"${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: red\">Socks connection unavailable</span>"
+      # #echo -e "Socks connection unavailable!"
+      # # cancel Libernet service
+      # #cancel_services
+	  # #re_services
+      # #exit 1
+    # #fi
+  # done
+# }
+
 function check_connection() {
   counter=0
-  #max_retries=5
-  #while [[ "${counter}" -lt "${max_retries}" ]]; do
-  while true; do
+  max_retries=3
+  while [[ "${counter}" -lt "${max_retries}" ]]; do
     sleep 5
     # write connection checking to service log
     "${LIBERNET_DIR}/bin/log.sh" -w "Checking connection, attempt: $[${counter} + 1]"
@@ -37,15 +66,14 @@ function check_connection() {
     fi
     counter=$[${counter} + 1]
     # max retries reach
-    #if [[ "${counter}" -eq "${max_retries}" ]]; then
+    if [[ "${counter}" -eq "${max_retries}" ]]; then
       # write not connectivity to service log
-      #"${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: red\">Socks connection unavailable</span>"
-      #echo -e "Socks connection unavailable!"
+      "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: red\">Socks connection unavailable</span>"
+      echo -e "Socks connection unavailable!"
       # cancel Libernet service
-      #cancel_services
-	  #re_services
-      #exit 1
-    #fi
+      cancel_services
+      exit 1
+    fi
   done
 }
 
@@ -162,15 +190,12 @@ function openvpn_service() {
 function start_services() {
   # clear service log
   "${LIBERNET_DIR}/bin/log.sh" -r
-    #bash $void
-  #"${LIBERNET_DIR}/bin/log.sh" -w "Wait Sync time&date"
-  #sleep 5
   # write service status: running
   "${LIBERNET_DIR}/bin/log.sh" -s 1
   # write to service log
   "${LIBERNET_DIR}/bin/log.sh" -w "Starting Libernet service"
-  ifdown libernet && ifup libernet
-  sleep 5
+  #ifdown libernet && ifup libernet
+  #sleep 5
   case "${TUNNEL_MODE}" in
     "0")
       ssh_service
@@ -246,23 +271,26 @@ function stop_services() {
     fi
   fi
   # write service status: stop
-  "${LIBERNET_DIR}/bin/log.sh" -s 0
+  # "${LIBERNET_DIR}/bin/log.sh" -s 0
   # write to service log
-  "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: gray\">Libernet service stopped</span>"
+   "${LIBERNET_DIR}/bin/log.sh" -w "<span style=\"color: gray\">Libernet service stopped</span>"
   echo -e "Libernet services stoped!"
+  sleep 5
+  # write service status: stop
+   "${LIBERNET_DIR}/bin/log.sh" -s 0
 }
 
-function restart_services() {
-stop_services
-sleep 10
-start_services
-}
+# function restart_services() {
+# stop_services
+# sleep 10
+# start_services
+# }
 
-function re_services() {
-stop_services -c
-sleep 10
-start_services
-}
+# function re_services() {
+# stop_services -c
+# sleep 10
+# start_services
+# }
 
 function cancel_services() {
   stop_services -c
@@ -301,6 +329,9 @@ function disable_auto_start() {
 }
 
 case "${1}" in
+-c)
+    check_connection
+    ;;
   -sh)
     ssh_service
     ;;
@@ -325,9 +356,9 @@ case "${1}" in
   -ds)
     stop_services
     ;;
-  -rl)
-    restart_services
-    ;;
+  # -rl)
+    # restart_services
+    # ;;
   -cl)
     cancel_services
     ;;
