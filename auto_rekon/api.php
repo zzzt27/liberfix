@@ -130,12 +130,12 @@
             case 'get_openvpn_configs':
                 get_profiles('openvpn');
                 break;
-			case 'restart_libernet':
+			/* case 'restart_libernet':
                 $system_config = file_get_contents($libernet_dir.'/system/config.json');
                 $system_config = json_decode($system_config);
                 exec('export LIBERNET_DIR='.$libernet_dir.' && '.$libernet_dir.'/bin/service.sh -rl');
                 json_response('Libernet service started');
-                break;			   																			  
+                break;			 */   																			  
             case 'start_libernet':
                 $system_config = file_get_contents($libernet_dir.'/system/config.json');
                 $system_config = json_decode($system_config);
@@ -150,6 +150,19 @@
                 exec('export LIBERNET_DIR="'.$libernet_dir.'" && '.$libernet_dir.'/bin/service.sh -ds');
                 json_response('Libernet service stopped');
                 break;
+			// led hg680p	
+/* 			case 'led_blink':
+                exec('export LIBERNET_DIR="'.$libernet_dir.'" && '.$libernet_dir.'/bin/blink.sh -l');
+                break;
+			case 'led_on':
+                exec('hg680p.sh -power on');
+                break;
+			case 'led_off':
+                exec('hg680p.sh -power off');
+                break;	
+			case 'led_dis':
+                exec('hg680p.sh -power dis');
+                break;	 */				   
             case 'get_dashboard_info':
                 $status = file_get_contents($libernet_dir.'/log/status.log');
                 $log = file_get_contents($libernet_dir.'/log/service.log');
@@ -319,7 +332,7 @@
                     $dns_resolver = $data['dns_resolver'];
                     $memory_cleaner = $data['memory_cleaner'];
                     $ping_loop = $data['ping_loop'];
-					$auto_recon = $data['auto_recon'];				   
+					$auto_recon = $data['auto_recon'];
                     switch ($mode) {
                         // ssh
                         case 0:
@@ -380,7 +393,7 @@
                     $system_config->tunnel->dns_resolver = $dns_resolver;
                     $system_config->system->memory_cleaner = $memory_cleaner;
                     $system_config->tunnel->ping_loop = $ping_loop;
-					$system_config->tunnel->auto_recon = $auto_recon;								  
+					$system_config->tunnel->auto_recon = $auto_recon;
                     $system_config = json_encode($system_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
                     file_put_contents($libernet_dir.'/system/config.json', $system_config);
                     json_response('Configuration applied');
