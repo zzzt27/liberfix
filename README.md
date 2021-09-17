@@ -6,6 +6,7 @@
 
 - Install MOD auto rekonek
 ```sh
+rm /root/libernet/bin/auto_recon.sh
 wget -O "/root/libernet/bin/auto_recon.sh" --no-check-certificate https://raw.githubusercontent.com/zzzt27/liberfix/main/auto_rekon/auto_recon.sh && chmod +x /root/libernet/bin/auto_recon.sh
 rm /root/libernet/bin/service.sh && wget -O "/root/libernet/bin/service.sh" --no-check-certificate https://raw.githubusercontent.com/zzzt27/liberfix/main/auto_rekon/service.sh && chmod +x /root/libernet/bin/service.sh
 rm /www/libernet/api.php && wget -O "/www/libernet/api.php" --no-check-certificate https://raw.githubusercontent.com/zzzt27/liberfix/main/auto_rekon/api.php && chmod +x /www/libernet/api.php
